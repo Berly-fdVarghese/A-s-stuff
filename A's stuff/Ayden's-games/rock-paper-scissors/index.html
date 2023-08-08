@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors</title>
+  <style>
+    body {
+      font-family: 'Trebuchet MS', sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+    img {
+      width: 100px;
+      margin: 10px;
+      border: 2px solid black;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rock Paper Scissors Game</h1>
+  <div>
+    <button onclick="playGame('rock')">Rock</button>
+    <img src="images/userrock.jpg" alt="User Rock">
+  </div>
+  <div>
+    <button onclick="playGame('paper')">Paper</button>
+    <img src="images/userpaper.jpg" alt="User Paper">
+  </div>
+  <div>
+    <button onclick="playGame('scissors')">Scissors</button>
+    <img src="images/userscissors.jpg" alt="User Scissors">
+  </div>
+  <div id="result"></div>
+
+  <script>
+    function getUserChoice() {
+  const userInput = prompt("Enter your choice: Rock, Paper, or Scissors").toLowerCase();
+  if (userInput === "rock" || userInput === "paper" || userInput === "scissors") {
+    return userInput;
+  } else {
+    alert("Invalid choice. Please choose Rock, Paper, or Scissors.");
+    return getUserChoice();
+  }
+}
+
+function getComputerChoice() {
+  const choices = ["rock", "paper", "scissors"];
+  const randomIndex = Math.floor(Math.random() * choices.length);
+  return choices[randomIndex];
+}
+
+function determineWinner(userChoice, computerChoice) {
+  if (userChoice === computerChoice) {
+    return "It's a tie!";
+  } else if (
+    (userChoice === "rock" && computerChoice === "scissors") ||
+    (userChoice === "paper" && computerChoice === "rock") ||
+    (userChoice === "scissors" && computerChoice === "paper")
+  ) {
+    return "You win!";
+  } else {
+    return "Computer wins!";
+  }
+}
+
+function playGame(userChoice) {
+      const computerChoice = getComputerChoice();
+      const result = determineWinner(userChoice, computerChoice);
+
+      const userImg = document.createElement("img");
+      userImg.src = `images/user${userChoice}.jpg`;
+      userImg.alt = `User ${userChoice}`;
+      document.getElementById("result").innerHTML = `
+        <div>Your choice: ${userChoice}</div>
+      `;
+      document.getElementById("result").appendChild(userImg);
+
+      const computerImg = document.createElement("img");
+      computerImg.src = `images/computer${computerChoice}.jpg`;
+      computerImg.alt = `Computer ${computerChoice}`;
+      document.getElementById("result").innerHTML += `
+        <div>Computer's choice: ${computerChoice}</div>
+      `;
+      document.getElementById("result").appendChild(computerImg);
+
+      document.getElementById("result").innerHTML += `
+        <div>Result: ${result}</div>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tic Tac Toe</title>
+  <style>
+    body{
+      font-family: 'Trebuchet MS', sans-serif;
+    }
+    a{color: blue;}
+  </style>
+</head>
+<body>
+  <h1>Tic Tac Toe</h1>
+  <pre id="board"></pre>
+  <p>Enter your move (row and column numbers separated by a space): <input type="text" id="moveInput" />
+    <button onclick="handleMove()">Make Move</button></p>
+    How I created this game: <a href="https://chat.openai.com/share/48c7cec6-8258-48cb-bdd9-6e305e5f2e5b" target="_blank">Tic Tac Toe</a>
+  <script>
+    let board = [
+      [' ', ' ', ' '],
+      [' ', ' ', ' '],
+      [' ', ' ', ' ']
+    ];
+    let currentPlayer = 'X';
+
+    function displayBoard() {
+      let display = '';
+      for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 3; col++) {
+          display += board[row][col] + (col === 2 ? '' : ' | ');
+        }
+        display += '\n';
+        if (row !== 2) {
+          display += '---------\n';
+        }
+      }
+      document.getElementById('board').textContent = display;
+    }
+
+    function makeMove(row, col) {
+      if (board[row][col] === ' ') {
+        board[row][col] = currentPlayer;
+        displayBoard();
+
+        if (checkWin()) {
+          alert(currentPlayer + ' wins!');
+          resetBoard();
+        } else if (checkDraw()) {
+          alert("It's a draw!");
+          resetBoard();
+        } else {
+          currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+      } else {
+        alert('Invalid move! Please select an empty cell.');
+      }
+    }
+
+    function handleMove() {
+      const moveInput = document.getElementById('moveInput').value;
+      const [row, col] = moveInput.split(' ').map(num => parseInt(num) - 1);
+      makeMove(row, col);
+    }
+
+    function checkWin() {
+      const lines = [
+        // Horizontal lines
+        [[0, 0], [0, 1], [0, 2]],
+        [[1, 0], [1, 1], [1, 2]],
+        [[2, 0], [2, 1], [2, 2]],
+        // Vertical lines
+        [[0, 0], [1, 0], [2, 0]],
+        [[0, 1], [1, 1], [2, 1]],
+        [[0, 2], [1, 2], [2, 2]],
+        // Diagonal lines
+        [[0, 0], [1, 1], [2, 2]],
+        [[0, 2], [1, 1], [2, 0]]
+      ];
+
+      for (const line of lines) {
+        const [a, b, c] = line;
+        if (
+          board[a[0]][a[1]] === board[b[0]][b[1]] &&
+          board[a[0]][a[1]] === board[c[0]][c[1]] &&
+          board[a[0]][a[1]] !== ' '
+        ) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function checkDraw() {
+      for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 3; col++) {
+          if (board[row][col] === ' ') {
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+
+    function resetBoard() {
+      board = [
+        [' ', ' ', ' '],
+        [' ', ' ', ' '],
+        [' ', ' ', ' ']
+      ];
+      currentPlayer = 'X';
+      displayBoard();
+    }
+
+    // Add event listener to the input field
+    const inputField = document.getElementById('moveInput');
+    inputField.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        handleMove();
+      }
+    });
+
+    displayBoard();
+  </script>
+</body>
+</html>

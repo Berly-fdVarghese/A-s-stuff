@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Typing Speed Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f5f5f5;
+    }
+
+    #game-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #quote {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    #input {
+      width: 100%;
+      height: 100px;
+      font-size: 18px;
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+
+    #result {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    #startButton, #resetButton {
+      font-size: 16px;
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <h1>Typing Speed Test</h1>
+    <p id="quote"></p>
+    <textarea id="input" placeholder="Start typing..."></textarea>
+    <button id="startButton">Start</button>
+    <button id="resetButton">Reset</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    const quotes = [
+      "Once there was a girl named Emma.",
+      "Emma walks to school.",
+      "A boy named Ben punches Emma.",
+      "The Teacher and Ben have a conversation.",
+      "Ben is sent to the principal's office.",
+      "Emma shares the day with her family.",
+      "The next day, Emma says 'Take me to Ben's house.'",
+      "Emma tells Ben's dad on what happens.",
+      "Ben is grounded",
+      "Emma and Ben became friends."
+    ];
+
+    let currentQuote;
+    let startTime;
+    let timerInterval;
+
+    function getRandomQuote() {
+      return quotes[Math.floor(Math.random() * quotes.length)];
+    }
+
+    function displayQuote() {
+      currentQuote = getRandomQuote();
+      document.getElementById("quote").textContent = currentQuote;
+    }
+
+    function startTimer() {
+      startTime = new Date();
+      timerInterval = setInterval(updateTimer, 100);
+    }
+
+    function updateTimer() {
+      const currentTime = new Date();
+      const elapsedTime = currentTime - startTime;
+      const seconds = Math.floor(elapsedTime / 1000);
+      document.getElementById("result").textContent = `Time: ${seconds} seconds`;
+    }
+
+    function calculateTypingSpeed() {
+      const wordsCount = currentQuote.trim().split(" ").length;
+      const elapsedTimeInSeconds = (new Date() - startTime) / 1000;
+      const wordsPerMinute = Math.round((wordsCount / elapsedTimeInSeconds) * 60);
+      return wordsPerMinute;
+    }
+
+    function displayResult(typingSpeed) {
+      const averageTypingSpeed = 40;
+      const professionalTypistMin = 43;
+      const professionalTypistMax = 80;
+
+      let message = `Your typing speed: ${typingSpeed} WPM (${typingSpeed * 5} CPM)`;
+
+      if (typingSpeed > professionalTypistMax) {
+        message += " - Excellent! (Above professional typists!)";
+        document.body.style.backgroundColor = "#a5f2a5"; // Light green background for excellent performance
+      } else if (typingSpeed >= professionalTypistMin && typingSpeed <= professionalTypistMax) {
+        message += " - Great! (Within professional typist range!)";
+        document.body.style.backgroundColor = "#f7d07a"; // Light yellow background for good performance
+      } else if (typingSpeed >= averageTypingSpeed) {
+        message += " - Good! (Above average!)";
+        document.body.style.backgroundColor = "#f2a5a5"; // Light red background for above-average performance
+      } else {
+        message += " - Keep practicing! (Below average!)";
+        document.body.style.backgroundColor = "#ffffff"; // White background for below-average performance
+      }
+
+      document.getElementById("result").textContent = message;
+      document.getElementById("resetButton").style.display = "block";
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      const typingSpeed = calculateTypingSpeed();
+      displayResult(typingSpeed);
+    }
+
+    document.getElementById("input").addEventListener("input", () => {
+      if (!startTime) {
+        displayQuote();
+        startTimer();
+      }
+
+      if (document.getElementById("input").value === currentQuote) {
+        stopTimer();
+      }
+    });
+
+    document.getElementById("input").addEventListener("keypress", (event) => {
+      if (event.key === "Enter" && !document.getElementById("input").disabled) {
+        stopTimer();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Hangman</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+  <h1 class="text-center">Hangman</h1>
+  <div class="➡️">Wrong Guesses: <span id='mistakes'>0</span> of <span id='maxWrong'></span></div>
+  <div class="text-center">
+    <img id='hangman' src="images/hang0.svg" alt="">
+    <p>Guess the word:</p>
+    <p id="wordSpotlight">The word to be guessed goes here</p>
+    <div id="keyboard"></div>
+    <button class="reset" onClick="reset()">Reset</button>
+    <div id="hint"></div> <!-- New line to display the hint -->
+  </div> 
+</div>
+  <button class="💧">Hover on the Button next to this button to click on another link.</button>
+  <div class="dropdown">
+    <button class="💧" style="border-left:1px solid navy">
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="../hangman/index.html">Hangman (progam helpers)</a>
+      <a href="../Number-Guessing-Game/index.html">Number Guessing Game</a>
+      <a href="../Tic-Tac-Toe/index.html">Tic Tac Toe</a>
+      <a href="../typing/index.html">Typing Speed Test</a>
+      <a href="../rock-paper-scissors/index.html">Rock Paper Scissors</a>
+    </div>
+  </div>
+    <h1>Credits</h1>
+    <a href="https://www.youtube.com/watch?v=dgvyE1sJS3Y" target="_blank">youtube</a>
+    <a href="https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbENoejZSZ041MlNSRGdDMDUyZnhpNVV0c3M0QXxBQ3Jtc0tuaXJPQjN2NmVaMUlBNTRVdjNXLS14bGMtNTdkTDRlUmRjRWhVd0lSZnM0RjE4Y2paU0g1TmpfcEcwQzVYZ1ZGdlVIeDJldGZjRFJqMlVjNTNUQ3Zwd1EyS0Q0TkczanlLM2FIZ0lpSzFVYlhoUmxjdw&q=https%3A%2F%2Fgithub.com%2Fsimonjsuh%2FVanilla-Javascript-Hangman-Game&v=dgvyE1sJS3Y" target="_blank">github</a>
+    <a href="https://chat.openai.com/share/b5e4cdc4-b68b-4577-98fb-bd708315e4e3">Hints for hangman </a> and <a href="https://chat.openai.com/share/a27e8a9e-caf1-4e85-b57d-efb6841f183a"> this too helped me in hints.</a>
+    <script src="Hang.js"></script>
+
+</body>
+</html>
